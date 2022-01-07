@@ -1,5 +1,4 @@
 import "./style.css";
-import Book from "./book.png";
 
 function component() {
   const element = document.createElement("div");
@@ -16,4 +15,4 @@ function component() {
   return element;
 }
 
-document.body.appendChild(component());
+// document.body.appendChild(component());
