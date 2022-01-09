@@ -34,7 +34,7 @@ body {
   font-weight: 900;
   color: rgba(0, 0, 0, 0.1);
   letter-spacing: 1px;
-  margin: -0.3em 0 0.5em;
+  margin: 0.3em 0 0.5em;
 }
 
 .all-tasks {
@@ -80,6 +80,16 @@ form {
   opacity: 0.7;
 }
 
+.btn-delete {
+  opacity: 0.7;
+  font-size: 1rem;
+  transition: color 200ms;
+}
+
+.btn.delete:hover {
+  color: var(--clr-warning);
+}
+
 .new {
   background: transparent;
   border: 0;
@@ -87,9 +97,13 @@ form {
   border-bottom: 1px solid currentColor;
   font-size: inherit;
   outline: none;
-
+  padding: 0.25em;
   transition: border-bottom 150ms ease-in;
   order: 2;
+}
+
+.new::placeholder {
+  opacity: 0.4;
 }
 
 ::-webkit-input-placeholder {
@@ -102,11 +116,15 @@ form {
 }
 
 .new:focus::placeholder {
-  opacity: 0.2;
+  opacity: 0.15;
 }
 
 .new.list {
   font-size: 1.1rem;
+}
+
+.new.task {
+  margin-bottom: 0;
 }
 
 .active-list {
@@ -140,6 +158,11 @@ form {
 
 .todo-body {
   padding: var(--spacer);
+  position: relative;
+}
+
+.new-task-creator .create {
+  color: var(--clr-primary);
 }
 
 [type="checkbox"] {
@@ -148,22 +171,31 @@ form {
 }
 
 .task label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  position: relative;
+}
+
+.task {
   position: relative;
   margin-bottom: 1.25em;
 }
 
-.task label::after {
+.task label:hover {
+  cursor: pointer;
+}
+
+.task::after {
   content: "";
   position: absolute;
   right: 0;
   left: 0;
-  bottom: -50%;
+  bottom: -0.5em;
   height: 1px;
   background: currentColor;
   opacity: 0.1;
 }
+
 
 .custom-checkbox {
   --size: 0.75em;
@@ -183,3 +215,47 @@ form {
   transform: scale(1.2);
   color: var(--clr-primary);
 }
+
+[type="checkbox"]:checked + label .custom-checkbox {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  box-shadow: inset 0 0 0px 2px white;
+}
+
+[type="checkbox"]:checked + label {
+  opacity: 0.5
+}
+
+.task label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  left: 1.5em;
+  top: 50%;
+  height: 3px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 150ms ease-in-out
+}
+
+[type="checkbox"]:checked + label::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.delete-stuff {
+  display: flex;
+  justify-content: space-evenly;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -35px;
+  color: var(--clr-light);
+
+}
+
+
+
+
