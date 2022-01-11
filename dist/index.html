@@ -5,19 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App</title>
-    <!-- <script defer src="../src/index.js"></script>
-    <link rel="stylesheet" href="../src/style.css"> -->
   </head>
   <body>
     <h1 class="title">Stuff To Do</h1>
 
     <div class="all-tasks">
       <h2 class="task-list-title">My Lists</h2>
-      <ul class="task-list" data-lists>
-        <!-- <li class="list-name active-list">YouTube</li>
-      <li class="list-name">Work</li>
-      <li class="list-name">Grocery</li> -->
-      </ul>
+      <ul class="task-list" data-lists></ul>
       <form action="" data-new-list-form>
         <input
           type="text"
@@ -37,23 +31,7 @@
       </div>
 
       <div class="todo-body">
-        <div class="tasks" data-tasks>
-          <div class="task">
-            <input type="checkbox" id="task-2" />
-            <label for="task-2">
-              <span class="custom-checkbox"></span>
-              another task
-            </label>
-          </div>
-
-          <div class="task">
-            <input type="checkbox" id="task-3" />
-            <label for="task-3">
-              <span class="custom-checkbox"></span>
-              another one
-            </label>
-          </div>
-        </div>
+        <div class="tasks" data-tasks></div>
 
         <div class="new-task-creator">
           <form action="" data-new-task-form>
@@ -68,14 +46,16 @@
           </form>
         </div>
         <div class="delete-stuff">
-          <button class="btn delete">Clear completed task</button>
+          <button class="btn delete" data-clear-complete-tasks-button>
+            Clear completed task
+          </button>
           <button class="btn delete" data-delete-list-button>
             Delete list
           </button>
         </div>
       </div>
     </div>
-    <script src="./bundle.js"></script>
+
     <template id="task-template">
       <div class="task">
         <input type="checkbox" />
@@ -84,5 +64,7 @@
         </label>
       </div>
     </template>
+
+    <script src="./bundle.js"></script>
   </body>
 </html>
