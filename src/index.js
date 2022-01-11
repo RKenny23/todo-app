@@ -12,6 +12,7 @@ const listDisplayContainer = document.querySelector(
 // const listCountElement = document.querySelector("[data-list-count}");
 const tasksContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
+const newTaskForm = document.querySelector('[data-new-task-form');
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
@@ -24,6 +25,8 @@ listsContainer.addEventListener("click", (e) => {
     saveAndRender();
   }
 });
+// hello test some changes
+
 
 deleteListButton.addEventListener("click", (e) => {
   lists = lists.filter((list) => list.id !== selectedListId);
@@ -45,13 +48,7 @@ function createList(name) {
   return {
     id: Date.now().toString(),
     name: name,
-    tasks: [
-      // {
-      //   id: "dada",
-      //   name: "Test",
-      //   complete: false,
-      // },
-    ],
+    tasks: [],
   };
 }
 
