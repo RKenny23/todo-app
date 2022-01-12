@@ -12,19 +12,22 @@
   box-sizing: border-box;
 }
 
+/* html {
+  min-width: 800px;
+} */
+
 body {
-  margin: 0;
+  margin: 2rem;
   font-family: "Work Sans", sans-serif;
   font-weight: 300;
   font-size: 1.5rem;
   background-color: var(--clr-primary);
   color: var(--clr-light);
-
   display: grid;
   grid:
     "header header header header" auto
     "...... lists  active ......" auto /
-    1fr minmax(100px, 300px) minmax(250px, 500px) 1fr;
+    1fr minmax(150px, 300px) minmax(198px, 500px) 1fr;
 }
 
 .title {
@@ -133,7 +136,8 @@ form {
 
 .todo-list {
   --spacer: 2rem;
-
+  min-width: 400px;
+  position: relative;
   grid-area: active;
   background: var(--clr-light);
   color: var(--clr-dark);
@@ -158,7 +162,6 @@ form {
 
 .todo-body {
   padding: var(--spacer);
-  position: relative;
 }
 
 .new-task-creator .create {
@@ -252,6 +255,5 @@ form {
   width: 100%;
   left: 0;
   bottom: -35px;
-  /* color: var(--clr-light); */
-  color: black;
+  color: var(--clr-light);
 }
