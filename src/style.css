@@ -12,10 +12,6 @@
   box-sizing: border-box;
 }
 
-/* html {
-  min-width: 800px;
-} */
-
 body {
   margin: 2rem;
   font-family: "Work Sans", sans-serif;
@@ -60,7 +56,13 @@ body {
 }
 
 form {
-  display: flex;
+  /* display: inline-flex;
+  flex-direction: column; */
+  /* /* display: grid; */
+  /* grid:
+  "button header header header" auto
+  "...... lists  active ......" auto /
+  1fr minmax(150px, 300px) minmax(198px, 500px) 1fr; */
 }
 
 .btn {
@@ -70,6 +72,7 @@ form {
   padding: 0;
   color: inherit;
   font-size: 1rem;
+  float: left;
 }
 
 .btn.create {
@@ -188,6 +191,7 @@ form {
   cursor: pointer;
 }
 
+/* task separators */
 .task::after {
   content: "";
   position: absolute;
@@ -229,6 +233,7 @@ form {
   opacity: 0.5
 }
 
+/* task strike-through */
 .task label::after {
   content: "";
   position: absolute;
@@ -256,4 +261,58 @@ form {
   left: 0;
   bottom: -35px;
   color: var(--clr-light);
+}
+
+/* .list-title-changer {
+  height: 20px;
+  width: 20px;
+  background-color: var(--clr-primary);
+}
+
+.list-title-changer:hover {
+  cursor: pointer;
+} */
+
+.title-change {
+  width: 250px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  border-bottom: 3px solid currentColor;
+  font-size: inherit;
+  outline: none;
+  font-weight: bold;
+}
+
+#due {
+  display: inline-flex;
+  font-size: 1rem;
+  padding-bottom: 0.2rem;
+}
+
+#due::placeholder {
+  opacity: 0.4;
+}
+
+.new-task-creator label {
+  font-size: 1rem;
+}
+
+.new-task-name, .new-task-date {
+  display: flex;
+  align-items: center;
+}
+
+.new-task-date {
+  margin-top: var(--spacer);
+  font-size: 1rem;
+}
+
+.new-task-date label {
+  margin-right: 0.5rem;
+}
+
+.new-task-priority  {
+  margin-top: 0.8rem;
+  font-size: 1rem;
 }
