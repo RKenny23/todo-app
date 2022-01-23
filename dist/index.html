@@ -26,7 +26,6 @@
     <div class="todo-list" data-list-display-container>
       <div class="todo-header">
         <h2 class="list-title" data-list-title></h2>
-        <!-- <button class="list-title-changer" data-list-title-changer-button></button> -->
         <p class="task-count" data-list-count></p>
       </div>
       <div class="todo-body">
@@ -50,12 +49,10 @@
                 data-due-date-input
                 id="due"
                 class="new task"
-                placeholder="new task name"
-                max="2050-12-31"
               />
             </div>
             <label>Priority:</label>
-            <select class="new-task-priority new task">
+            <select id="task-priority" class="new-task-priority new task">
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
@@ -78,6 +75,7 @@
         <input type="checkbox" />
         <label>
           <span class="custom-checkbox"></span>
+          <!-- <div class="todo-details"></div> -->
         </label>
       </div>
     </template>

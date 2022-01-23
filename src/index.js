@@ -15,12 +15,11 @@ const tasksContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
 const newTaskForm = document.querySelector("[data-new-task-form]");
 const newTaskInput = document.querySelector("[data-new-task-input]");
+const newTaskDueDate = document.querySelector("[data-due-date-input]");
+const newTaskPriority = document.getElementById("task-priority");
 const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
-// const listTitleChangerButton = document.querySelector(
-//   "[data-list-title-changer-button]"
-// );
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
@@ -42,7 +41,8 @@ listTitleElement.ondblclick = function (e) {
   this.innerHTML = "";
   this.appendChild(input);
   input.focus();
-  save();
+  // console.log(listTitleElement);
+  // save();
 };
 
 // changes active list
@@ -80,12 +80,6 @@ deleteListButton.addEventListener("click", (e) => {
   saveAndRender();
 });
 
-function updateLists(name) {
-  if (listTitleElement != name) {
-    lists.replace(name, listTitleElement);
-  }
-}
-
 // adds new list
 newListForm.addEventListener("submit", (e) => {
   e.preventDefault(); //stops form from submitting
@@ -101,13 +95,34 @@ newListForm.addEventListener("submit", (e) => {
 newTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskName = newTaskInput.value;
+  let taskDueDate = newTaskDueDate.value;
+  const taskPriority = newTaskPriority.value;
+  taskDueDate = convertDate(taskDueDate);
   if (taskName == null || taskName === "") return;
-  const task = createTask(taskName);
+  const task = createTask(taskName, taskDueDate, taskPriority);
   newTaskInput.value = null;
+  newTaskDueDate.value = null;
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
 });
+
+// Converts date format
+function convertDate(date) {
+  let myDate = new Date(date);
+  let month = myDate.getMonth();
+  let day = myDate.getDate();
+  let year = myDate.getFullYear()
+  return `${month + 1}-${day + 1}-${year}`;
+};
+
+// Adds new task from dropdown menu
+// newTaskPriority.addEventListener("keyup", (e) => {
+//   if (e.key === "Enter") {
+//     e.preventDefault();
+//     newTaskForm.click();
+//   }
+// });
 
 function createList(name) {
   return {
@@ -117,10 +132,12 @@ function createList(name) {
   };
 }
 
-function createTask(name) {
+function createTask(name, dueDate, priority) {
   return {
     id: Date.now().toString(),
     name: name,
+    dueDate: dueDate,
+    priority: priority,
     complete: false,
   };
 }
@@ -133,7 +150,8 @@ function saveAndRender() {
 function save() {
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
-  // localStorage.setItem(LOCAL_STORAGE_TITLE_KEY, listTitle);
+  // localStorage.setItem(LOCAL_STORAGE_TITLE_KEY, JSON.stringify(listTitle));
+  // localStorage.setItem(listTitleElement, JSON.stringify(input));
 }
 
 function render() {
@@ -162,6 +180,13 @@ function renderTasks(selectedList) {
     const label = taskElement.querySelector("label");
     label.htmlFor = task.id;
     label.append(task.name);
+    const dateSpan = document.createElement("h3");
+    const prioritySpan = document.createElement("h3");
+    dateSpan.innerText = task.dueDate;
+    prioritySpan.innerText = task.priority;
+    label.append(dateSpan);
+    label.append(prioritySpan);
+
     tasksContainer.appendChild(taskElement);
   });
 }
@@ -187,6 +212,12 @@ function renderLists() {
   });
 }
 
+// function updateLists(name) {
+//   if (listTitleElement != name) {
+//     lists.splice(1, listTitleElement);
+//   }
+// }
+
 function clearElement(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -195,3 +226,4 @@ function clearElement(element) {
 
 render();
 // updateLists(lists.name);
+// console.log(lists);
