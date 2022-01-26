@@ -1,5 +1,5 @@
 :root {
-  --clr-primary: rgb(30, 72, 136);
+  --clr-primary: rgb(43, 82, 141);
   --clr-light: #f4f4f4;
   --clr-dark: #333;
   --clr-warning: rgb(99, 36, 36);
@@ -27,7 +27,7 @@ body {
   grid:
     "header header header header" auto
     "...... lists  active ......" auto /
-    1fr minmax(180px, 300px) minmax(500px, 600px) 1fr;
+    1fr minmax(180px, 300px) minmax(500px, 700px) 1fr;
   padding-bottom: 8rem;
 }
 
@@ -42,6 +42,7 @@ body {
 }
 
 .all-tasks {
+  position: relative;
   grid-area: lists;
 }
 
@@ -58,10 +59,6 @@ body {
 
 .list-name:hover {
   opacity: 0.7;
-}
-
-form {
-  display: block;
 }
 
 .btn {
@@ -105,6 +102,7 @@ form {
   padding: 0.25em;
   transition: border-bottom 150ms ease-in;
   order: 2;
+  /* position: relative; */
 }
 
 .new::placeholder {
@@ -118,6 +116,9 @@ form {
 
 .new:focus {
   border-bottom-width: 3px;
+  /* box-shadow: 0 0 0 1px black; */
+  /* position: absolute; */
+  /* border: 0; */
 }
 
 .new:focus::placeholder {
@@ -139,6 +140,7 @@ form {
 .todo-list {
   --spacer: 2rem;
   min-width: 400px;
+  width: fit-content;
   position: relative;
   grid-area: active;
   background: var(--clr-light);
@@ -217,6 +219,7 @@ form {
   border-radius: 50%;
   transform: scale(1);
   transition: transform 300ms ease-in-out;
+  grid-area: checkbox;
 }
 
 .task:hover .custom-checkbox,
@@ -244,6 +247,8 @@ form {
   left: 1.5em;
   top: 50%;
   height: 3px;
+  color: red;
+  opacity: 0.5;
   background: currentColor;
   transform: scaleX(0);
   transform-origin: right;
@@ -303,6 +308,7 @@ form {
 
 .new-task-date label {
   margin-right: 0.5rem;
+  grid-area: label;
 }
 
 .new-task-priority {
@@ -312,7 +318,13 @@ form {
 
 .task label {
   display: grid;
-  grid: auto / 40px minmax(200px, 400px) 200px 100px;
+  /* grid: auto / 40px minmax(200px, 400px) 40px 200px 100px; */
+  /* grid-template-rows: repeat(auto-fit, 1fr); */
+  grid:
+    "checkbox name btn date priority" auto
+    "des des des des des" auto /
+    40px minmax(200px, 400px) 40px 200px 100px;
+  align-items: center;
 }
 
 .task label h3 {
@@ -320,7 +332,93 @@ form {
   font-size: 1.5rem;
 }
 
-.task label h3:nth-last-child(-n + 2) {
-  text-align: center;
+.task label h3:first-of-type {
+  grid-area: name;
 }
 
+.task label h3:last-child {
+  text-align: center;
+  grid-area: priority;
+}
+
+
+
+.task label h3:nth-last-child(2) {
+  text-align: center;
+  grid-area: date;
+}
+
+/* label #text {
+  font-size: 4rem;
+} */
+
+/* svg {
+  position: absolute;
+  left: 50%;
+} */
+
+#expander {
+  /* position: absolute;
+  top: 1.8rem;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between; */
+  width: 30px;
+  height: 30px;
+}
+
+/* .nav-toggler .bar {
+  height: 3px;
+  width: 100%;
+  background-color: var(--clr-primary);
+  border-radius: 10px;
+} */
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: red;
+  color: #444;
+  position: absolute;
+  left: 40%;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  grid-area: btn;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active,
+.collapsible:hover {
+  background-color: #e4e4e4;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  padding: 1rem;
+  margin: 0 calc(40px - 0.75em);
+  width: 95%;
+  display: none;
+  overflow: hidden;
+  background-color: #eeeeee;
+  grid-area: des;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.new-task-description input {
+  margin: 2rem 0;
+  font-size: 1rem;
+  width: 260px;
+}
+
+.task-details-container {
+  margin-left: 17px;
+}
+
+form > .btn.create {
+  position: absolute;
+  left: 0;
+}

@@ -35,28 +35,33 @@
             <div class="new-task-name">
               <input
                 type="text"
-                data-new-task-input
+                data-new-task-name
                 class="new task"
                 placeholder="new task name"
                 aria-label="new task name"
               />
               <button class="btn create" aria-label="create new task">+</button>
             </div>
-            <div class="new-task-date">
-              <label for="due">Due date:</label>
-              <input
-                type="date"
-                data-due-date-input
-                id="due"
-                class="new task"
-              />
+            <div class="task-details-container">
+              <div class="new-task-description">
+                <input type="text" class="new task" data-new-task-description placeholder="Enter description...">
+              </div>
+              <div class="new-task-date">
+                <label for="due">Due date:</label>
+                <input
+                  type="date"
+                  data-due-date-input
+                  id="due"
+                  class="new task"
+                />
+              </div>
+              <label>Priority:</label>
+              <select id="task-priority" class="new-task-priority new task">
+                <option value="low" selected="selected">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
             </div>
-            <label>Priority:</label>
-            <select id="task-priority" class="new-task-priority new task">
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
           </form>
         </div>
         <div class="delete-stuff">
@@ -75,7 +80,7 @@
         <input type="checkbox" />
         <label>
           <span class="custom-checkbox"></span>
-          <!-- <div class="todo-details"></div> -->
+          <!-- <button class="collapsible"></button> -->
         </label>
       </div>
     </template>

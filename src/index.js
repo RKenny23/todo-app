@@ -14,12 +14,17 @@ const listCountElement = document.querySelector("[data-list-count]");
 const tasksContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
 const newTaskForm = document.querySelector("[data-new-task-form]");
-const newTaskInput = document.querySelector("[data-new-task-input]");
+const newTaskInput = document.querySelector("[data-new-task-name]");
+const newTaskDescription = document.querySelector(
+  "[data-new-task-description]"
+);
 const newTaskDueDate = document.querySelector("[data-due-date-input]");
 const newTaskPriority = document.getElementById("task-priority");
 const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
+
+const expandButton = document.getElementsByClassName("content");
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
@@ -95,34 +100,59 @@ newListForm.addEventListener("submit", (e) => {
 newTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskName = newTaskInput.value;
+  const taskDescription = newTaskDescription.value;
   let taskDueDate = newTaskDueDate.value;
   const taskPriority = newTaskPriority.value;
   taskDueDate = convertDate(taskDueDate);
   if (taskName == null || taskName === "") return;
-  const task = createTask(taskName, taskDueDate, taskPriority);
+  const task = createTask(taskName, taskDescription, taskDueDate, taskPriority);
   newTaskInput.value = null;
   newTaskDueDate.value = null;
+  newTaskDescription.value = null;
+
+  // let btn = document.getElementsByClassName("collapsible");
+
+  // btn[0].addEventListener("click", function () {
+  //   console.log("clicked");
+  //   this.classList.toggle("active");
+  //   var content = this.nextElementSibling;
+  //   if (content.style.display === "block") {
+  //     content.style.display = "none";
+  //   } else {
+  //     content.style.display = "block";
+  //   }
+  // });
+
+  // newTaskPriority.value = "Low";
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
 });
 
+// expandButton.addEventListener("click", (e) => {
+//   console.log("clicked");
+//   expandButton.classList.toggle("active");
+//   let content = document.getElementsByClassName("content");
+//   // content.setAttribute('id', 'content')
+//   if (content.style.display === "block") {
+//     content.style.display = "none";
+//   } else {
+//     content.style.display = "block";
+//   }
+// });
+
 // Converts date format
 function convertDate(date) {
   let myDate = new Date(date);
+
+  if (isNaN(myDate.getFullYear())) return "";
   let month = myDate.getMonth();
   let day = myDate.getDate();
-  let year = myDate.getFullYear()
+  let year = myDate.getFullYear();
   return `${month + 1}-${day + 1}-${year}`;
-};
+}
 
-// Adds new task from dropdown menu
-// newTaskPriority.addEventListener("keyup", (e) => {
-//   if (e.key === "Enter") {
-//     e.preventDefault();
-//     newTaskForm.click();
-//   }
-// });
+// const expandButton = document.getElementById("expander");
 
 function createList(name) {
   return {
@@ -132,10 +162,11 @@ function createList(name) {
   };
 }
 
-function createTask(name, dueDate, priority) {
+function createTask(name, description, dueDate, priority) {
   return {
     id: Date.now().toString(),
     name: name,
+    description: description,
     dueDate: dueDate,
     priority: priority,
     complete: false,
@@ -174,18 +205,45 @@ function render() {
 function renderTasks(selectedList) {
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
+
     const checkbox = taskElement.querySelector("input");
     checkbox.id = task.id;
     checkbox.checked = task.complete;
     const label = taskElement.querySelector("label");
     label.htmlFor = task.id;
-    label.append(task.name);
-    const dateSpan = document.createElement("h3");
-    const prioritySpan = document.createElement("h3");
-    dateSpan.innerText = task.dueDate;
-    prioritySpan.innerText = task.priority;
-    label.append(dateSpan);
-    label.append(prioritySpan);
+    const taskName = document.createElement("h3");
+    const expandButton = document.createElement("button");
+    expandButton.className = "collapsible";
+    const taskDescription = document.createElement("div");
+    taskDescription.className = "content";
+    const dateLabel = document.createElement("h3");
+    const priorityLabel = document.createElement("h3");
+
+    // const coll = document.getElementsByClassName("collapsible");
+
+    // for (let i = 0; i < coll.length; i++) {
+    //   coll[i].addEventListener("click", function() {
+    //     console.log('clicked');
+    //     this.classList.toggle("active");
+    //     let content = this.nextElementSibling;
+    //     if (content.style.display === "block") {
+    //       content.style.display = "none";
+    //     } else {
+    //       content.style.display = "block";
+    //     }
+    //   });
+    // }
+
+    taskName.innerText = `${task.name}`;
+    taskDescription.innerText = task.description;
+    dateLabel.innerText = task.dueDate;
+    priorityLabel.innerText = task.priority;
+
+    label.append(taskName);
+    label.append(expandButton);
+    label.append(taskDescription);
+    label.append(dateLabel);
+    label.append(priorityLabel);
 
     tasksContainer.appendChild(taskElement);
   });
@@ -225,5 +283,3 @@ function clearElement(element) {
 }
 
 render();
-// updateLists(lists.name);
-// console.log(lists);
