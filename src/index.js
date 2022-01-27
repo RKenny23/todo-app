@@ -24,14 +24,10 @@ const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
 
-const expandButton = document.getElementsByClassName("content");
-
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
-// const LOCAL_STORAGE_TITLE_KEY = "task.listTitle";
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
-// let listTitle = localStorage.getItem(LOCAL_STORAGE_TITLE_KEY);
 
 // edits list title
 listTitleElement.ondblclick = function (e) {
@@ -46,8 +42,6 @@ listTitleElement.ondblclick = function (e) {
   this.innerHTML = "";
   this.appendChild(input);
   input.focus();
-  // console.log(listTitleElement);
-  // save();
 };
 
 // changes active list
@@ -109,37 +103,11 @@ newTaskForm.addEventListener("submit", (e) => {
   newTaskInput.value = null;
   newTaskDueDate.value = null;
   newTaskDescription.value = null;
-
-  // let btn = document.getElementsByClassName("collapsible");
-
-  // btn[0].addEventListener("click", function () {
-  //   console.log("clicked");
-  //   this.classList.toggle("active");
-  //   var content = this.nextElementSibling;
-  //   if (content.style.display === "block") {
-  //     content.style.display = "none";
-  //   } else {
-  //     content.style.display = "block";
-  //   }
-  // });
-
   // newTaskPriority.value = "Low";
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
 });
-
-// expandButton.addEventListener("click", (e) => {
-//   console.log("clicked");
-//   expandButton.classList.toggle("active");
-//   let content = document.getElementsByClassName("content");
-//   // content.setAttribute('id', 'content')
-//   if (content.style.display === "block") {
-//     content.style.display = "none";
-//   } else {
-//     content.style.display = "block";
-//   }
-// });
 
 // Converts date format
 function convertDate(date) {
@@ -151,8 +119,6 @@ function convertDate(date) {
   let year = myDate.getFullYear();
   return `${month + 1}-${day + 1}-${year}`;
 }
-
-// const expandButton = document.getElementById("expander");
 
 function createList(name) {
   return {
@@ -181,8 +147,6 @@ function saveAndRender() {
 function save() {
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
-  // localStorage.setItem(LOCAL_STORAGE_TITLE_KEY, JSON.stringify(listTitle));
-  // localStorage.setItem(listTitleElement, JSON.stringify(input));
 }
 
 function render() {
@@ -212,27 +176,12 @@ function renderTasks(selectedList) {
     const label = taskElement.querySelector("label");
     label.htmlFor = task.id;
     const taskName = document.createElement("h3");
-    const expandButton = document.createElement("button");
-    expandButton.className = "collapsible";
+    const expandBtn = document.createElement("button");
+    expandBtn.className = "expand-btn";
     const taskDescription = document.createElement("div");
     taskDescription.className = "content";
     const dateLabel = document.createElement("h3");
     const priorityLabel = document.createElement("h3");
-
-    // const coll = document.getElementsByClassName("collapsible");
-
-    // for (let i = 0; i < coll.length; i++) {
-    //   coll[i].addEventListener("click", function() {
-    //     console.log('clicked');
-    //     this.classList.toggle("active");
-    //     let content = this.nextElementSibling;
-    //     if (content.style.display === "block") {
-    //       content.style.display = "none";
-    //     } else {
-    //       content.style.display = "block";
-    //     }
-    //   });
-    // }
 
     taskName.innerText = `${task.name}`;
     taskDescription.innerText = task.description;
@@ -240,13 +189,28 @@ function renderTasks(selectedList) {
     priorityLabel.innerText = task.priority;
 
     label.append(taskName);
-    label.append(expandButton);
+    label.append(expandBtn);
     label.append(taskDescription);
     label.append(dateLabel);
     label.append(priorityLabel);
 
     tasksContainer.appendChild(taskElement);
   });
+
+  const expandBtn = document.getElementsByClassName("expand-btn");
+
+
+  for (let i = 0; i < expandBtn.length; i++) {
+    expandBtn[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      let content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
 }
 
 function renderTaskCount(selectedList) {
@@ -269,12 +233,6 @@ function renderLists() {
     listsContainer.appendChild(listElement);
   });
 }
-
-// function updateLists(name) {
-//   if (listTitleElement != name) {
-//     lists.splice(1, listTitleElement);
-//   }
-// }
 
 function clearElement(element) {
   while (element.firstChild) {
