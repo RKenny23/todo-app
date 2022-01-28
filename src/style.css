@@ -1,7 +1,9 @@
 :root {
-  --clr-primary: rgb(43, 82, 141);
+  --clr-primary: #25274d;
   --clr-light: #f4f4f4;
-  --clr-dark: #333;
+  --clr-light-blue: rgb(41, 100, 138);
+  --clr-mid: rgba(41, 100, 138, 0.2);
+  --clr-dark: #25274d;
   --clr-warning: rgb(99, 36, 36);
 }
 
@@ -36,7 +38,8 @@ body {
   text-align: center;
   font-size: calc(5vw + 2rem);
   font-weight: 900;
-  color: rgba(0, 0, 0, 0.1);
+  color: var(--clr-light-blue);
+  opacity: 0.5;
   letter-spacing: 1px;
   margin: 0.2em 0;
 }
@@ -44,6 +47,10 @@ body {
 .all-tasks {
   position: relative;
   grid-area: lists;
+}
+
+.all-tasks form {
+  display: flex;
 }
 
 .task-list {
@@ -72,7 +79,7 @@ body {
 }
 
 .btn.create {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 900;
   margin-right: 0.25em;
   transition: opacity 250ms ease-in;
@@ -123,7 +130,7 @@ body {
 
 .new.list {
   font-size: 1.1rem;
-  /* padding-bottom: 0.5rem; */
+  width: 80%;
 }
 
 .new.task {
@@ -142,11 +149,12 @@ body {
   grid-area: active;
   background: var(--clr-light);
   color: var(--clr-dark);
+  border-radius: 10px;
 }
 
 .todo-header {
   padding: var(--spacer);
-  background: #e4e4e4;
+  background-color: var(--clr-mid);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -363,18 +371,18 @@ body {
 }
 
 .expand-btn::after {
-  content: '\25be';
+  content: "\25be";
   font-size: 1.5rem;
 }
 
 .expand-btn.active:after {
-  content: '\25c0';
+  content: "\25c0";
   font-size: inherit;
 }
 
 .active,
 .expand-btn:hover {
-  background-color: rgba(43, 82, 141, 0.05);
+  background-color: rgba(41, 100, 138, 0.05);
   border-radius: 50%;
 }
 
@@ -385,15 +393,8 @@ body {
   width: 95%;
   display: none;
   overflow: hidden;
-  background-color: rgba(43, 82, 141, 0.05);
+  background-color: rgba(41, 100, 138, 0.05);
   grid-area: des;
   border-radius: 5px;
   font-size: 1rem;
-  transition: border-bottom 150ms ease-in;
 }
-
-
-/* form > .btn.create {
-  position: absolute;
-  left: 0;
-} */
