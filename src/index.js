@@ -159,10 +159,14 @@ function render() {
     listDisplayContainer.style.display = "none";
   } else {
     listDisplayContainer.style.display = "";
-    listTitleElement.innerText = selectedList.name;
-    renderTaskCount(selectedList);
-    clearElement(tasksContainer);
-    renderTasks(selectedList);
+      if (listTitleElement == null) {
+        listDisplayContainer.style.display = "none";
+      } else {
+        listTitleElement.innerText = selectedList.name;
+        renderTaskCount(selectedList);
+        clearElement(tasksContainer);
+        renderTasks(selectedList);
+      }
   }
 }
 
@@ -198,7 +202,6 @@ function renderTasks(selectedList) {
   });
 
   const expandBtn = document.getElementsByClassName("expand-btn");
-
 
   for (let i = 0; i < expandBtn.length; i++) {
     expandBtn[i].addEventListener("click", function () {
