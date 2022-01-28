@@ -233,6 +233,9 @@ function renderLists() {
   });
 }
 
+// if (lists.length == 1) listsContainer.firstChild.firstchild.classList.add("active-list");
+
+
 function clearElement(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -258,5 +261,7 @@ function renderOnce() {
   if (!ranSample) renderSample();
 }
 
+// renderSample();
 renderOnce();
 render();
+
