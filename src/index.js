@@ -159,14 +159,10 @@ function render() {
     listDisplayContainer.style.display = "none";
   } else {
     listDisplayContainer.style.display = "";
-      if (listTitleElement == null) {
-        listDisplayContainer.style.display = "none";
-      } else {
-        listTitleElement.innerText = selectedList.name;
-        renderTaskCount(selectedList);
-        clearElement(tasksContainer);
-        renderTasks(selectedList);
-      }
+    listTitleElement.innerText = selectedList.name;
+    renderTaskCount(selectedList);
+    clearElement(tasksContainer);
+    renderTasks(selectedList);
   }
 }
 
@@ -243,4 +239,24 @@ function clearElement(element) {
   }
 }
 
+let ranSample = false;
+
+function renderSample() {
+  const sampleList1 = createList("Sample List");
+  if (lists.includes(sampleList1) === false) lists.push(sampleList1);
+  renderLists();
+  selectedListId = sampleList1.listId;
+
+  const sampleTask1 = createTask("Sample Task", "A brief description goes here.", "2-04-2022", "low");
+  sampleList1.tasks.push(sampleTask1);
+  renderTasks(sampleList1);
+
+  ranSample = true;
+}
+
+function renderOnce() {
+  if (!ranSample) renderSample();
+}
+
+renderOnce();
 render();
