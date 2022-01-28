@@ -1,5 +1,3 @@
-# todo-app
-
 # A todo list app
 
 This is a simple task management application where multiple lists of tasks can be created.
